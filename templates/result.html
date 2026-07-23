@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Scan Result - PhishGuard{% endblock %}
+{% block content %}
+<section class="result-section">
+  <a href="{{ url_for('home') }}" class="back-link">&larr; Scan another URL</a>
+
+  <div class="result-card {{ 'danger' if result.is_phishing else 'safe' }}">
+    <div class="result-icon">
+      {% if result.is_phishing %}&#9888;{% else %}&#9989;{% endif %}
+    </div>
+    <div class="result-body">
+      <h2>{{ result.label }}</h2>
+      <p class="scanned-url">{{ result.url }}</p>
+      <div class="confidence-bar-wrap">
+        <div class="confidence-label">
+          Confidence: <strong>{{ result.confidence }}%</strong>
+        </div>
+        <div class="confidence-bar">
+          <div class="confidence-fill {{ 'danger' if result.is_phishing else 'safe' }}"
+               style="width: {{ result.confidence }}%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if result.is_phishing %}
+  <div class="advice-box danger">
+    <strong>Do not enter personal information, passwords, or payment details on this site.</strong>
+    <p>If you received this link via email or SMS, do not click any further links in that message.
+       Report it to your email provider and delete it.</p>
+  </div>
+  {% else %}
+  <div class="advice-box safe">
+    <strong>No obvious phishing indicators were detected.</strong>
+    <p>No automated tool is perfect &mdash; stay cautious with unfamiliar sites, and never enter
+       credentials on a page you weren't expecting.</p>
+  </div>
+  {% endif %}
+
+  <details class="feature-details">
+    <summary>View extracted URL features</summary>
+    <table class="feature-table">
+      <thead><tr><th>Feature</th><th>Value</th></tr></thead>
+      <tbody>
+        {% for key, value in result.features.items() %}
+        <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </details>
+</section>
+{% endblock %}

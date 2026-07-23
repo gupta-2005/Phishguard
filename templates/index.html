@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Scan a URL - PhishGuard{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Is this link safe?</h1>
+  <p class="subtitle">Paste a URL below and our machine learning model will analyze it in real time.</p>
+
+  <form action="{{ url_for('predict') }}" method="POST" class="scan-form" autocomplete="off">
+    <input
+      type="text"
+      name="url"
+      placeholder="e.g. https://example.com/login"
+      required
+      autofocus
+    >
+    <button type="submit">Analyze URL</button>
+  </form>
+</section>
+
+<section class="features-grid">
+  <div class="feature-card">
+    <h3>&#9889; Real-time analysis</h3>
+    <p>Extracts 25+ structural and lexical features instantly, no external lookups required.</p>
+  </div>
+  <div class="feature-card">
+    <h3>&#129504; ML powered</h3>
+    <p>A Random Forest classifier trained with scikit-learn scores every URL.</p>
+  </div>
+  <div class="feature-card">
+    <h3>&#128202; Confidence score</h3>
+    <p>See exactly how confident the model is in its Safe / Phishing verdict.</p>
+  </div>
+  <div class="feature-card">
+    <h3>&#128220; Scan history</h3>
+    <p>Every scan is logged locally so you can review what you've checked.</p>
+  </div>
+</section>
+{% endblock %}

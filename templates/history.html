@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Scan History - PhishGuard{% endblock %}
+{% block content %}
+<section class="history-section">
+  <div class="history-header">
+    <h1>Scan History</h1>
+    {% if rows %}
+    <form action="{{ url_for('clear_history') }}" method="POST"
+          onsubmit="return confirm('Clear all scan history?');">
+      <button type="submit" class="btn-secondary">Clear history</button>
+    </form>
+    {% endif %}
+  </div>
+
+  {% if rows %}
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Result</th>
+        <th>Confidence</th>
+        <th>Scanned At (UTC)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td class="url-cell">{{ row['url'] }}</td>
+        <td>
+          <span class="badge {{ 'danger' if row['prediction'] == 'Phishing' else 'safe' }}">
+            {{ row['prediction'] }}
+          </span>
+        </td>
+        <td>{{ row['confidence'] }}%</td>
+        <td>{{ row['scanned_at'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty-state">No scans yet. <a href="{{ url_for('home') }}">Analyze a URL</a> to get started.</p>
+  {% endif %}
+</section>
+{% endblock %}
