@@ -16,6 +16,21 @@ using a machine learning model, with a confidence score and scan history.
 - 🗂️ Local scan history (SQLite) with a clear-history option
 - 🔌 JSON API endpoint (`/api/predict`) for real-time / programmatic use
 
+
+## Screenshots
+
+### Home page
+![Home page](screenshots/home.png)
+
+### Phishing detected
+![Phishing result](screenshots/result-phishing.png)
+
+### Safe result
+![Safe result](screenshots/result-safe.png)
+
+---
+
+
 ---
 
 ## Getting started
